@@ -25,6 +25,12 @@ enum Category {
   JACKET
 }
 
+enum ProductStatus {
+  PUBLISHED
+  SAVED
+  OUTOFSTOCK
+}
+
 model User {
   id                  String  @id @default(uuid())
   name                String?
@@ -35,6 +41,22 @@ model User {
   orders              Order[]
   verificationToken   String? @unique
   verifiedAccount     Boolean @default(false)
+  forgotpasswordToken String?
+
+  @@unique([id, address])
+}
+
+model Seller {
+  id                  String    @id @unique @default(uuid())
+  name                String?
+  email               String    @unique
+  password            String
+  brand               String
+  contact             Int?
+  address             String?
+  products            Product[]
+  verificationToken   String?   @unique
+  verifiedAccount     Boolean   @default(false)
   forgotpasswordToken String?
 
   @@unique([id, address])
@@ -60,13 +82,16 @@ model Order {
 }
 
 model Product {
-  id          String   @id @default(uuid())
+  id          String        @id @unique @default(uuid())
+  seller      Seller        @relation(fields: [sellerId], references: [id])
+  sellerId    String
   name        String
   description String?
   image       String
   price       String
-  quantity    String
-  inStock     Boolean  @default(false)
+  stock       String
+  status      ProductStatus
+  inStock     Boolean       @default(false)
   category    Category
   orders      Order[]
 }
