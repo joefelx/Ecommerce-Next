@@ -21,14 +21,15 @@ export default class ProductManager {
   }
 
   async getProduct(id: string) {
-    const data = await this.prisma.seller.findUnique({
+    const data = await this.prisma.product.findMany({
       where: {
-        id: id,
+        sellerId: id,
       },
       include: {
-        products: true,
+        orders: true,
       },
     });
+    console.log(data);
 
     return data;
   }

@@ -16,7 +16,7 @@ function NewProduct() {
   const [saved, setSaved] = useState(false);
   const [product, setProduct] = useState({
     name: "",
-    sellerId: "56c931e1-37ca-44d3-99b2-daab734afe18",
+    sellerId: "c68bca59-0be7-4a37-af98-826e7e8201a3",
     description: "",
     image: "",
     price: "",
@@ -58,10 +58,6 @@ function NewProduct() {
       setSaved(true);
     }
   }
-
-  useEffect(() => {
-    console.log(product);
-  }, [product]);
 
   if (loading) {
     return (
